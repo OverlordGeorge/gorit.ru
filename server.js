@@ -2,6 +2,18 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 let express = require('express');
+let mongo = require("mongodb").MongoClient;
+
+mongo.connect("mongodb://localhost:27017", function(err, client){
+
+    if(err){
+        return console.log(err);
+    }
+    console.log("connection success");
+    // взаимодействие с базой данных
+    //client.close();
+});
+
 
 let port =3000;
 
