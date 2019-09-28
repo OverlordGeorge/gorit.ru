@@ -1,55 +1,47 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+//modules
+let app = require('express')();
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
 let express = require('express');
 let mongo = require("mongodb").MongoClient;
 
+// configs
+let config = require('./config');
+
 //my modules
-let ItemHandler = require('./my_modules/ItemHandler');
+let ProductsHandler = require('./my_modules/productsHandler/ProductHandler').ProductsHandler;
+let GetPosthadler = require('./my_modules/getPostHadler/GetPostHandler').GetPostHandle;
+let getPostHandler = new GetPosthadler();
+//main logic
 
-mongo.connect("mongodb://localhost:27017", function(err, client){
+app.use('/node_modules', express.static(__dirname + '/node_modules/'));
 
-    if(err){
-        return console.log(err);
+app.listen(config.server.port, function () {
+    console.log("server is working")
+});
+
+mongo.connect("mongodb://"+config.database.address, function(err, client){
+
+    if (!err){
+        console.log('connect to '+config.database.name+' database');
     }
-    console.log("connection success");
 
-    let db = client.db("CarShop");
-    let collection = db.collection("Items");
-    let itemHandler = new ItemHandler(collection);
+    let db = client.db(config.database.name);
+    let productsColl = db.collection(config.database.itemsCollName);
 
-    app.get('/getItems', function(req, res){
-        itemHandler.setQuery(req, function (data) {
-            res.send(data);
-        })
-    });
+    let productsHandler = new ProductsHandler(productsColl);
 
-    // взаимодействие с базой данных
-    //client.close();
+    app.get('/findProducts', function (request, response) {
+        try{
+            let params = getPostHandler.parseGetParams(request);
+            productsHandler.find(params, function (data) {
+                response.status(200);
+                response.send(data);
+            })
+        }
+        catch (e) {
+
+        }
+    })
+
 });
-
-
-let port =3000;
-
-app.use(express.static(__dirname + '/public'));
-
-app.use('/node_modules', express.static(__dirname + '/node_modules'));
-
-
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
-
-
-io.sockets.on('connection',function(socket) {
-    console.log("new user");
-
-    socket.on('greetings',function(){
-        io.to(socket.id).emit('test',"welcome to server");
-    });
-});
-
-http.listen(port, function(){
-    console.log('listening on: '+port);
-});
-

@@ -1,0 +1,10 @@
+{
+  "database": {
+    "name": "Shop",
+    "address": "localhost:27017",
+    "itemsCollName": "Products"
+  },
+  "server": {
+    "port": 3000
+  }
+}
