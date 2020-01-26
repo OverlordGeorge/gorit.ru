@@ -5,10 +5,9 @@ class GetPostHandler{
 
     parseGetParams(req){
         let params = {};
-        let querykeys = Object.keys(req.query);
-        for (let key in querykeys){
+        for (let key in req.query){
             if (req.query[key]!==""){
-                params.push(req.query[key]);
+                params[key] = req.query[key];
             }
         }
         return params;

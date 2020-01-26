@@ -1,0 +1,29 @@
+<div class="row h-100">
+    <div class="col-1">
+
+    </div>
+    <div class="col-10 row">
+        <div class="col-md-3 col-sm-6 p-2" *ngFor="let product of products">
+            <div class="card product-card">
+                <img src="{{product.img}}" class="card-img-top">
+                <div class="card-body">
+                    <h5><span class="product_name">{{product.name}}</span></h5>
+                    <h6><span class="product_price">{{product.price}} Р</span></h6>
+                    <p class="card-text">{{product.desc}}</p>
+                </div>
+                <div class="card-footer row ml-0 mr-0 pl-0 pr-0">
+                    <div class="col-6">
+                        <button mat-stroked-button color="accent">Узнать больше</button>
+                    </div>
+                    <div class="col-6 text-right">
+                        <button mat-mini-fab class="purchase_button"><img src="../../../assets/icons/shopping_cart-24px.svg">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-1">
+
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.product-card{
+    background-color: rgba(38, 39, 41, 0.91);
+    color: white;
+}
+
+.product_name{
+    color: deeppink;
+}
+
+.product_price{
+    color: white;
+}
+
+.purchase_button{
+    background-color: #ffb100;
+}

@@ -1,7 +1,16 @@
+*{
+
+}
 
 .menu{
-    width: 100%;
-    background-color: #81858d;
-    margin-top: 0;
-    height: 1.5rem;
+    background-color: #212529;
+}
+
+.menu_list{
+    padding-top: 0.8rem;
+    color: white;
+}
+
+.menu_search{
+    color: white;
 }
