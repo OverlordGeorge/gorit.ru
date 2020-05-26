@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from "@angular/material";
 import {SearchResult} from "./components/searchResult/SearchResult.component";
 import {MatCardModule} from '@angular/material/card';
+import {ShowMoreComponent} from './components/showMore/showMore.component';
 
 
 export function initializeApp(appConfig: AppConfig) {
@@ -23,7 +24,8 @@ export function initializeApp(appConfig: AppConfig) {
     declarations: [
         AppComponent,
         MenuComponent,
-        SearchResult
+        SearchResult,
+      ShowMoreComponent
     ],
     imports: [
         BrowserModule,

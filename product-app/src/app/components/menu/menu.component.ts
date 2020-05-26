@@ -11,7 +11,7 @@ export class MenuComponent {
 
     products: Array<any>;
     productQuery: ProductQuery = {};
-    searchValue: string="";
+    searchValue = '';
 
     constructor(private productService: ProductService){
         this.productService.get(this.productQuery);
