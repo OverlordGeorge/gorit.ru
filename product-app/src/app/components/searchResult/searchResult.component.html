@@ -9,14 +9,14 @@
                 <div class="card-body">
                     <h5><span class="product_name">{{product.name}}</span></h5>
                     <h6><span class="product_price">{{product.price}} Р</span></h6>
-                    <p class="card-text">{{product.desc}}</p>
+                  <p class="card-text">{{product.desc | slice:0:120}}<span *ngIf="product.desc.length> 120">...</span></p>
                 </div>
                 <div class="card-footer row ml-0 mr-0 pl-0 pr-0">
                     <div class="col-6">
-                        <button mat-stroked-button color="accent">Узнать больше</button>
+                        <button mat-stroked-button color="accent" (click)="openMoreWindow(product)">Узнать больше</button>
                     </div>
                     <div class="col-6 text-right">
-                        <button mat-mini-fab class="purchase_button"><img src="../../../assets/icons/shopping_cart-24px.svg">
+                        <button (click)="addProductToCart(product)" mat-mini-fab class="purchase_button"><img src="../../../assets/icons/shopping_cart-24px.svg">
                         </button>
                     </div>
                 </div>

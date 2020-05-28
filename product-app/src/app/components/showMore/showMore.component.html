@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h2 mat-dialog-title class="product_name">{{product.name}}</h2>
+<mat-dialog-content class="mat-typography">
+  <img src="{{product.img}}"/>
+  <h2><span class="product_price">{{product.price}} Р</span></h2>
+  <p>{{product.desc}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="row w-100">
+    <div class="col-6">
+      <button mat-button mat-dialog-close >Закрыть</button>
 
-</body>
-</html>
+    </div>
+    <div class="col-6">
+      <button mat-mini-fab class="purchase_button float-right"><img src="../../../assets/icons/shopping_cart-24px.svg"></button>
+    </div>
+  </div>
+</mat-dialog-actions>

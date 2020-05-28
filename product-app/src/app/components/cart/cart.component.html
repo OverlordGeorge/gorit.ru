@@ -1,0 +1,51 @@
+<div class="row cart_back">
+  <div class="col-9" (click)="closeCart()">
+
+  </div>
+  <div class="col-3 cart animate__animated animate__fadeInRight pt-3 pr-2">
+
+    <mat-list>
+      <div mat-subheader>Ваши товары: </div>
+      <mat-list-item *ngFor="let product of products">
+<!--        <mat-icon mat-list-icon>folder</mat-icon>-->
+        <div mat-line>
+          <div class="row">
+            <div class="col-4">
+              {{product.productInfo.name}}
+            </div>
+            <div class="col-3">
+              {{product.count}} шт.
+            </div>
+            <div class="col-2">
+              {{product.count * product.productInfo.price}} руб.
+            </div>
+            <div class="col-1">
+              <button mat-mini-fab (click)="deleteProductFromCart(product.productInfo._id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div mat-line *ngIf="products.length === 0">
+          Ваша корзина пуста
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <div mat-subheader>
+        Сумма к оплате: {{totalPrice}} руб.
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row w-100 mt-3" *ngIf="products.length !== 0">
+        <div class="col-2">
+
+        </div>
+        <div class="col-8 text-center">
+          <button mat-stroked-button color="warn">Оформить заказ</button>
+        </div>
+        <div class="col-2">
+
+        </div>
+      </div>
+    </mat-list>
+  </div>
+</div>

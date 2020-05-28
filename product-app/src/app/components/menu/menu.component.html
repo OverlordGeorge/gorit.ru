@@ -1,18 +1,24 @@
-<div class="row h-100  menu">
-    <div class="col-4 menu_list">
-        <button mat-button [matMenuTriggerFor]="aboveMenu">Наши продукты</button>
-        <mat-menu #aboveMenu="matMenu" yPosition="above">
-            <button mat-menu-item>Масла</button>
-            <button mat-menu-item>Комплектующие</button>
-        </mat-menu>
-    </div>
-    <div class="col-4"></div>
-    <div class="col-4 menu_search">
-        <mat-form-field>
-            <input matInput type="text" placeholder="Поиск по сайту" [(ngModel)]="searchValue" (keyup)="searchByName(searchValue)" (change)="searchByName(searchValue)">
-            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchValue()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
-    </div>
+<div class="row h-100 menu">
+  <div class="col-4 menu_list">
+    <button mat-button [matMenuTriggerFor]="aboveMenu">Наши продукты</button>
+    <mat-menu #aboveMenu="matMenu" yPosition="above">
+      <button mat-menu-item>Масла</button>
+      <button mat-menu-item>Комплектующие</button>
+    </mat-menu>
+  </div>
+  <div class="col-4"></div>
+  <div class="col-2 menu_search">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Поиск по сайту" [(ngModel)]="searchValue"
+             (keyup)="searchByName(searchValue)" (change)="searchByName(searchValue)">
+      <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchValue()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="col-2 menu_list">
+      <button mat-flat-button class="cart_button" mat-fab (click)="openCart()">
+        <mat-icon matBadge="{{cartAmount}}" matBadgePosition="above after" matBadgeColor="warn">shopping_cart</mat-icon>
+      </button>
+  </div>
 </div>
