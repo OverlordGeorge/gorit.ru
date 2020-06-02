@@ -1,0 +1,56 @@
+<h2 mat-dialog-title class="product_name">Оформление заказа</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="row">
+    <div class="col-1">
+
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-6">
+          <h4>Информация о клиенте: </h4>
+          <div class="row">
+            <mat-form-field class="orderInfoField">
+              <mat-label>Ваше имя</mat-label>
+              <input matInput placeholder="Иванов иван"  [(ngModel)]="clientsInfo.name">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="orderInfoField">
+              <mat-label>Ваш телефон</mat-label>
+              <input type="tel" matInput placeholder="+70000000000"  [(ngModel)]="clientsInfo.phone">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="orderInfoField">
+              <mat-label>Адрес доставки</mat-label>
+              <input matInput placeholder="ул. Мате залки 34, кв 21"  [(ngModel)]="clientsInfo.address">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col">
+          <h4>Информация о заказе: </h4>
+          <mat-list role="list" class="orderProductList">
+            <mat-list-item role="listitem" *ngFor="let product of products">
+              {{product.productInfo.name}} * {{product.count}} = {{product.productInfo.price * product.count}}
+            </mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <div mat-subheader>
+            Сумма к оплате: {{totalPrice}} руб.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button mat-raised-button mat-dialog-close color="primary">Отмена</button>
+        </div>
+        <div class="col-6">
+          <button class="float-right" mat-raised-button color="warn" (click)="makeOrder()">Заказать</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </div>
+</mat-dialog-content>

@@ -11,6 +11,7 @@ let config = require('./config');
 
 //my modules
 let ProductsHandler = require('./my_modules/productsHandler/ProductHandler').ProductsHandler;
+let OrderHandler = require('./my_modules/ordersHandler/OrderHandler').OrderHandler;
 let GetPosthadler = require('./my_modules/getPostHadler/GetPostHandler').GetPostHandle;
 let getPostHandler = new GetPosthadler();
 //main logic
@@ -73,20 +74,34 @@ mongo.connect("mongodb://"+config.database.address, { useNewUrlParser: true }, f
 
     let db = client.db(config.database.name);
     let productsColl = db.collection(config.database.itemsCollName);
+    let ordersColl = db.collection(config.database.ordersCollName);
 
     let productsHandler = new ProductsHandler(productsColl);
+    let orderHandler = new OrderHandler(ordersColl, productsColl);
 
-    app.get('/findProducts', function (request, response) {
+    app.get('/findProducts',  (request, response) => {
         try{
             let params = getPostHandler.parseGetParams(request);
             productsHandler.find(params, function (data) {
-                response.status(200);
-                response.send(data);
+                response.status(200).send(data);
             })
         }
         catch (e) {
             console.log('error in findProducts');
         }
     })
+
+    app.get('/makeOrder', (request, response) => {
+        try{
+           let params = getPostHandler.parseGetParams(request);
+           orderHandler.insertOrder(params, (obj) => {
+               response.status(200).send("Спасибо за ваш заказ, наш оператор свяжится с вами в ближайщее время");
+           });
+        }
+        catch (e) {
+            console.log('error in findProducts');
+            response.status(200).send("Сервер заказов недоступен, попробуйте позже");
+        }
+    });
 
 });

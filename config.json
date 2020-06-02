@@ -2,7 +2,8 @@
   "database": {
     "name": "Shop",
     "address": "localhost:27017",
-    "itemsCollName": "Products"
+    "itemsCollName": "Products",
+    "ordersCollName": "Orders"
   },
   "server": {
     "port": 3000

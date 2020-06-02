@@ -18,6 +18,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatBadgeModule} from '@angular/material/badge';
 import {CartComponent} from './components/cart/cart.component';
 import {MatListModule} from '@angular/material/list';
+import {OrderComponent} from "./components/order/order.component";
 
 
 export function initializeApp(appConfig: AppConfig) {
@@ -30,7 +31,8 @@ export function initializeApp(appConfig: AppConfig) {
     MenuComponent,
     SearchResult,
     ShowMoreComponent,
-    CartComponent
+    CartComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ export function initializeApp(appConfig: AppConfig) {
     MatListModule
   ],
   entryComponents: [
-    ShowMoreComponent
+    ShowMoreComponent,
+    OrderComponent
   ],
   providers: [
     AppConfig,

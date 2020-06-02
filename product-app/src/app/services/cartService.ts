@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {Product} from '../Interfaces/Product';
 import {ProductRecord} from '../Interfaces/ProductRecord';
+import {AppConfig} from "./AppConfig";
+import {map} from "rxjs/operators";
+import {ClientsInfo} from "../Interfaces/ClientsInfo";
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +116,32 @@ export class CartService {
     } else {
       this.increaseProductCount(id);
     }
+  }
+
+  clearCart() {
+    this.cartProducts = [];
+    this.recalculateValues();
+  }
+
+  formulateOrder(productRecords: Array<ProductRecord>) {
+    const order = [];
+    productRecords.forEach( (record) => {
+      order.push({id: record.productInfo._id, count: record.count});
+    });
+    return order;
+  }
+
+  makeOrder(clientsInfo: ClientsInfo) {
+    const order = this.formulateOrder(this.cartProducts);
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('order', JSON.stringify(order));
+    httpParams = httpParams.append('name', clientsInfo.name);
+    httpParams = httpParams.append('phone', clientsInfo.phone);
+    httpParams = httpParams.append('address', clientsInfo.address);
+    this.httpClient.get(AppConfig.settings.orders.make, {params: httpParams}).
+      subscribe((data) => {
+          this.clearCart();
+      });
   }
 }
 
