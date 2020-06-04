@@ -13,6 +13,7 @@ let config = require('./config');
 let ProductsHandler = require('./my_modules/productsHandler/ProductHandler').ProductsHandler;
 let OrderHandler = require('./my_modules/ordersHandler/OrderHandler').OrderHandler;
 let GetPosthadler = require('./my_modules/getPostHadler/GetPostHandler').GetPostHandle;
+let TelegramBotHandler = require('./my_modules/telegramBothandler/telegramBotHandler').TelegramBotHandler;
 let getPostHandler = new GetPosthadler();
 //main logic
 
@@ -78,6 +79,8 @@ mongo.connect("mongodb://"+config.database.address, { useNewUrlParser: true }, f
 
     let productsHandler = new ProductsHandler(productsColl);
     let orderHandler = new OrderHandler(ordersColl, productsColl);
+    let botHandler = new TelegramBotHandler(config.telegram.token);
+
 
     app.get('/findProducts',  (request, response) => {
         try{
@@ -95,7 +98,8 @@ mongo.connect("mongodb://"+config.database.address, { useNewUrlParser: true }, f
         try{
            let params = getPostHandler.parseGetParams(request);
            orderHandler.insertOrder(params, (obj) => {
-               response.status(200).send("Спасибо за ваш заказ, наш оператор свяжится с вами в ближайщее время");
+               botHandler.sendOrder(obj, params.order);
+               response.status(200).send("Спасибо за ваш заказ, наш оператор свяжится с вами в ближайщее время!");
            });
         }
         catch (e) {
