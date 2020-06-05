@@ -99,7 +99,7 @@ mongo.connect("mongodb://"+config.database.address, { useNewUrlParser: true }, f
            let params = getPostHandler.parseGetParams(request);
            orderHandler.insertOrder(params, (obj) => {
                botHandler.sendOrder(obj, params.order);
-               response.status(200).send("Спасибо за ваш заказ, наш оператор свяжится с вами в ближайщее время!");
+               response.status(200).send("Спасибо за ваш заказ, наш оператор свяжется с вами в ближайщее время!");
            });
         }
         catch (e) {

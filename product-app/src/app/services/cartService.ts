@@ -26,17 +26,17 @@ export class CartService {
   }
 
   recalculateValues() {
-      let amount = 0;
-      let price = 0;
-      for (let i = 0; i < this.cartProducts.length; i++) {
-        amount += this.cartProducts[i].count;
-        price += this.cartProducts[i].count * this.cartProducts[i].productInfo.price;
-      }
-      this.cartPrice = price;
-      this.cartAmount = amount;
-      this.productPriceSubj.next(price);
-      this.productAmountSubj.next(amount);
-      this.cartProductsSubj.next(this.cartProducts);
+    let amount = 0;
+    let price = 0;
+    for (let i = 0; i < this.cartProducts.length; i++) {
+      amount += this.cartProducts[i].count;
+      price += this.cartProducts[i].count * this.cartProducts[i].productInfo.price;
+    }
+    this.cartPrice = price;
+    this.cartAmount = amount;
+    this.productPriceSubj.next(price);
+    this.productAmountSubj.next(amount);
+    this.cartProductsSubj.next(this.cartProducts);
   }
 
   subscribeToCartPrice() {
@@ -125,22 +125,23 @@ export class CartService {
 
   formulateOrder(productRecords: Array<ProductRecord>) {
     const order = [];
-    productRecords.forEach( (record) => {
+    productRecords.forEach((record) => {
       order.push({id: record.productInfo._id, count: record.count});
     });
     return order;
   }
 
-  makeOrder(clientsInfo: ClientsInfo) {
+  makeOrder(clientsInfo: ClientsInfo, callback) {
     const order = this.formulateOrder(this.cartProducts);
     let httpParams = new HttpParams();
     httpParams = httpParams.append('order', JSON.stringify(order));
     httpParams = httpParams.append('name', clientsInfo.name);
     httpParams = httpParams.append('phone', clientsInfo.phone);
     httpParams = httpParams.append('address', clientsInfo.address);
-    this.httpClient.get(AppConfig.settings.orders.make, {params: httpParams}).
-      subscribe((data) => {
-          this.clearCart();
+    this.httpClient.get(AppConfig.settings.orders.make, {params: httpParams, responseType: 'text'},)
+      .subscribe((data: string) => {
+        callback(data);
+        this.clearCart();
       });
   }
 }

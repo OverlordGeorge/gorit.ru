@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="product_name">Оформление заказа</h2>
 <mat-dialog-content class="mat-typography">
-  <div class="row">
+  <div class="row" *ngIf="responseMessage===''">
     <div class="col-1">
 
     </div>
@@ -52,5 +52,8 @@
     <div class="col-1">
 
     </div>
+  </div>
+  <div class="row" *ngIf="responseMessage !== ''">
+    <div>{{responseMessage}}</div>
   </div>
 </mat-dialog-content>

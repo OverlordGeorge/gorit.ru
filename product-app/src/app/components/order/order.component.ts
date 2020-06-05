@@ -1,7 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import {Component} from '@angular/core';
 import {ProductRecord} from '../../Interfaces/ProductRecord';
 import {CartService} from '../../services/cartService';
 import {ClientsInfo} from '../../Interfaces/ClientsInfo';
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-order',
@@ -17,22 +18,30 @@ export class OrderComponent {
     address: ''
   };
   private totalPrice = 0;
+  private responseMessage = '';
 
-  constructor(private cartService: CartService) {
-    this.cartService.subscribeToCartProducts().subscribe( products => {
+  constructor(private dialogRef: MatDialogRef<OrderComponent>, private cartService: CartService) {
+    this.cartService.subscribeToCartProducts().subscribe(products => {
       this.products = products;
     });
-    this.cartService.subscribeToCartPrice().subscribe( price => {
+    this.cartService.subscribeToCartPrice().subscribe(price => {
       this.totalPrice = price;
     });
   }
 
-
-
-  makeOrder() {
-    this.cartService.makeOrder(this.clientsInfo);
+  showCartResponse(msg) {
+    this.responseMessage = msg;
+    setTimeout(() => {
+      this.responseMessage = '';
+      this.dialogRef.close();
+    }, 5000);
   }
 
+  makeOrder() {
+    this.cartService.makeOrder(this.clientsInfo, (response) => {
+      this.showCartResponse(response);
+    });
+  }
 
 
 }
