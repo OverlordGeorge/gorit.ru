@@ -50,7 +50,7 @@ class TelegramBotHandler {
         str+="Клиент: "+objInfo.name+"\n";
         str+="Телефон: "+objInfo.phone+"\n";
         str+="Адрес доставки: "+objInfo.address+"\n";
-        str+="Общая сумма: "+objInfo.price+"\n";
+        str+="Общая сумма: "+objInfo.price+" Руб.\n";
         str+="Список товаров: \n";
         productsInfo.forEach( (product, i) => {
             let num = i+1;
